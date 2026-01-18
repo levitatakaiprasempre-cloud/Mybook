@@ -1,0 +1,352 @@
+#Mybook
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Livros - Preto e Vermelho</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #111;
+            border: 2px solid #c00;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(200, 0, 0, 0.5);
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #c00;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #c00;
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(200, 0, 0, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            color: #f00;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        .upload-section {
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .upload-section h2 {
+            color: #c00;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-button {
+            display: block;
+            padding: 12px 20px;
+            background-color: #c00;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .file-input-button:hover {
+            background-color: #800;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(200, 0, 0, 0.4);
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .content-section {
+            display: none;
+            margin-top: 30px;
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #444;
+            margin-bottom: 20px;
+        }
+        
+        .book-title {
+            color: #c00;
+            font-size: 1.8rem;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #c00;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #c00;
+        }
+        
+        .book-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            text-align: justify;
+            padding: 10px 0;
+        }
+        
+        .book-content p {
+            margin-bottom: 20px;
+            text-indent: 30px;
+        }
+        
+        .instructions {
+            background-color: #222;
+            border: 1px solid #444;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .instructions h2 {
+            color: #c00;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .highlight {
+            color: #f00;
+            font-weight: bold;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .book-title {
+                font-size: 1.4rem;
+            }
+            
+            .book-content {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>LEITOR DE LIVROS</h1>
+            <div class="subtitle">Formato Preto e Vermelho</div>
+        </header>
+        
+        <section class="upload-section">
+            <h2>Carregar seu Livro</h2>
+            <div class="file-input-wrapper">
+                <input type="file" id="fileInput" accept=".txt">
+                <label for="fileInput" class="file-input-button">Selecione seu arquivo de texto (.txt)</label>
+            </div>
+            <div class="file-name" id="fileName">Nenhum arquivo selecionado</div>
+        </section>
+        
+        <section class="content-section" id="contentSection">
+            <div class="content-header">
+                <h2 class="book-title" id="bookTitle">Nome do Livro</h2>
+                <div class="controls">
+                    <button class="btn" id="prevBtn">Anterior</button>
+                    <button class="btn" id="nextBtn">Próximo</button>
+                </div>
+            </div>
+            <div class="book-content" id="bookContent">
+                <!-- Conteúdo do livro será renderizado aqui -->
+            </div>
+        </section>
+        
+        <section class="instructions">
+            <h2>Como Usar</h2>
+            <ul>
+                <li>Selecione seu arquivo de texto (.txt) contendo o livro</li>
+                <li>O conteúdo será exibido com a <span class="highlight">paleta de cores preto e vermelho</span></li>
+                <li>Use os botões para navegar entre as páginas</li>
+                <li>Para livros grandes, o conteúdo é dividido em páginas automaticamente</li>
+                <li>O texto éjustificado e com recuo de parágrafos</li>
+            </ul>
+        </section>
+        
+        <footer>
+            <p>Leitor de Livros - Estilo Preto e Vermelho | Todos os direitos reservados</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const fileName = document.getElementById('fileName');
+            const contentSection = document.getElementById('contentSection');
+            const bookTitle = document.getElementById('bookTitle');
+            const bookContent = document.getElementById('bookContent');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            let bookText = '';
+            let currentPage = 0;
+            let pages = [];
+            const wordsPerPage = 500; // Ajuste para controlar o tamanho das páginas
+            
+            // Atualiza o nome do arquivo selecionado
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    fileName.textContent = file.name;
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        bookText = e.target.result;
+                        bookTitle.textContent = file.name.replace('.txt', '');
+                        splitIntoPages();
+                        displayPage();
+                        contentSection.style.display = 'block';
+                    };
+                    
+                    reader.readAsText(file);
+                } else {
+                    fileName.textContent = 'Nenhum arquivo selecionado';
+                }
+            });
+            
+            // Divide o conteúdo em páginas
+            function splitIntoPages() {
+                pages = [];
+                const words = bookText.trim().split(/\s+/);
+                
+                for (let i = 0; i < words.length; i += wordsPerPage) {
+                    const pageWords = words.slice(i, i + wordsPerPage);
+                    pages.push(pageWords.join(' '));
+                }
+            }
+            
+            // Exibe uma página específica
+            function displayPage() {
+                if (pages.length === 0) return;
+                
+                // Formata o conteúdo com parágrafos
+                let formattedContent = pages[currentPage];
+                // Quebra o texto em parágrafos baseado em quebras de linha dobradas
+                const paragraphs = formattedContent.split('\n\n');
+                formattedContent = paragraphs.map(p => `<p>${p}</p>`).join('');
+                
+                bookContent.innerHTML = formattedContent;
+                
+                // Atualiza botões
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage === pages.length - 1;
+            }
+            
+            // Navegação entre páginas
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) {
+                    currentPage--;
+                    displayPage();
+                }
+            });
+            
+            nextBtn.addEventListener('click', function() {
+                if (currentPage < pages.length - 1) {
+                    currentPage++;
+                    displayPage();
+                }
+            });
+            
+            // Atalho do teclado para navegação
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    prevBtn.click();
+                } else if (e.key === 'ArrowRight') {
+                    nextBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
